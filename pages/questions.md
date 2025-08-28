@@ -2,7 +2,9 @@
 
 ausnog@louis.jarasi.us or louisj@5gn.com.au
 
-github.com/ljarasius/ausnog-2025
+https://github.com/ljarasius/ausnog-2025
+
+<br>
 
 Special thanks to:
 - Sohan @ Juniper
