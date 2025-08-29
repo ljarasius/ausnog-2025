@@ -1,6 +1,6 @@
 # What is the problem being solved?
 
-5G Networks uses 3 primary sites to deliver internal and customer compute services, one in Sydney (SDC), one in Melbourne (MDC), and one in Adelaide (ADC). These networks are critical for business continuity, and are in need of a refresh after running successfully for many years.
+5G Networks uses 3 primary sites to deliver internal and customer compute services, one in Sydney (SDC), one in Melbourne (MDC), and one in Adelaide (ADC). These networks are critical for business continuity, however are in need of a refresh after running successfully for many years.
 
 - Ageing compute network infrastructure
 - Spanning tree
@@ -14,7 +14,7 @@ One thing we've been wanting to tackle for a while is a refresh of our data cent
 
 The existing network is running Juniper Networks QFX5100 series switches, which I'm sure is a pretty common choice over the years with many other operators in this room. They have been quite reliable, and did everything we needed when they were selected. However, they have been marked as End of Life from the vendor, and we need to start looking at longer term solutions to ensure that we have hardware and software support.
 
-Secondly, being an older design means that there's some older technologies at play here. Spanning tree has its' place, however there is newer kids on the block such as VXLAN that bring a lot of improvements. This network is using MSTP to try and help better use all available links, however I'm sure I am preaching to the converted that there are better options in a modern network.
+Secondly, being an older design means that there's some older technologies at play here. Spanning tree has its' place, however there is newer kids on the block that bring a lot of improvements. This network is using MSTP to try and help better use all available links, however I'm sure I am preaching to the converted that there are better options in a modern network.
 
 Now, let's look at how we work on the devices day to day. Adding an existing VLAN to a port is pretty straightforward, but what about adding a new VLAN? Whole different ballgame. There's a lot of pairs of switches in the data centre networks, and having to go around multiple devices introduces room for error. This all makes general moves, adds and changes become tedious and time consuming.
 

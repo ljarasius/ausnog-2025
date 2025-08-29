@@ -22,5 +22,5 @@ Secondly, expect that breaking it will fail spectacularly, and go looking into t
 
 Thirdly, try your best to simulate what a failure could look like in the real world. Whether that is someone unplugging a cable, removing a VLAN or power-cycling a device, the more realistic the more likely you will be to find something wrong.
 
-Lastly, reach out to your peers, many of whom might be in this room, and talk about what problems you're trying to solve and the issues you are facing. There's some amazing people here, and even if you're just looking for validation that you're not completely insane with an approach to a problem, it makes us all better engineers to learn from others success, and failures too.
+Lastly, reach out to your peers, many of whom might be in this room, and talk about what problems you're trying to solve and the issues you are facing. There's some amazing people here, and even if you're just looking for validation that you're not completely insane with an approach to a problem, it makes us all better engineers to learn from each others successes, and failures too.
 -->

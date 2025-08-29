@@ -17,11 +17,11 @@ src: ./pages/problem.md
 ---
 
 ---
-src: ./pages/evpn-vxlan.md
+src: ./pages/solution.md
 ---
 
 ---
-src: ./pages/solution.md
+src: ./pages/design.md
 ---
 
 ---
@@ -37,7 +37,15 @@ src: ./pages/bgp.md
 ---
 
 ---
+src: ./pages/bfd.md
+---
+
+---
 src: ./pages/tac.md
+---
+
+---
+src: ./pages/kb.md
 ---
 
 ---
