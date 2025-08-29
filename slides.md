@@ -29,11 +29,11 @@ src: ./pages/implementation.md
 ---
 
 ---
-src: ./pages/testing.md
+src: ./pages/bgp.md
 ---
 
 ---
-src: ./pages/bgp.md
+src: ./pages/testing.md
 ---
 
 ---

@@ -11,7 +11,7 @@ transition: none
 
 ::right::
 
-<img src="/lessons.jpg" width="300px">
+<img src="/lessons.jpg" width="300px" class="ml-20">
 
 <!--
 There's a few important things we have taken away from this.
