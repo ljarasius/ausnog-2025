@@ -1,7 +1,3 @@
----
-layout: cover
-transition: none
----
 # BFD going down... from BGP timers expiring?
 
 <b>Louis Jarasius</b><br>

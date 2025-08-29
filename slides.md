@@ -1,6 +1,7 @@
 ---
-theme: ./theme
 src: ./pages/cover.md
+theme: ./theme
+transition: none
 ---
 
 ---
