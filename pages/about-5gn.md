@@ -16,6 +16,8 @@ transition: none
 
 ::right::
 
+<img src="/about-5gn.jpg">
+
 https://5gnetworks.au
 
 https://bgp.tools/as/63956
