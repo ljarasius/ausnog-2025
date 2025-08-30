@@ -85,6 +85,20 @@
   }
 }
 
+.slidev-layout.two-cols-header {
+  .header-section {
+    @apply mb-0;
+    
+    h1 {
+      @apply text-4xl mb-0 leading-tight;
+    }
+  }
+  
+  .col-left, .col-right {
+    @apply flex flex-col;
+  }
+}
+
 .slidev-layout {
   position: relative;
 }
