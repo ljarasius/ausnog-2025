@@ -1,3 +1,7 @@
+---
+layout: two-cols
+transition: none
+---
 # Testing
 
 - Remove VLAN from Apstra
@@ -5,6 +9,10 @@
 - Transparent to the devices at either end
 
 What could go wrong?
+
+::right::
+
+<img src="/testing.jpg">
 
 <!--
 So we're all good to go. One of things we decided to test first was the external connectivity out of the fabric.

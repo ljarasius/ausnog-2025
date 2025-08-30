@@ -6,7 +6,7 @@ transition: none
 <img src="/tac.jpg">
 
 <!--
-So now it is time to engage TAC. I think some of these memes will capture my slow descent into madness.
+Right, this isn't behaving how it should. Let's speak to the vendor, and get some help on understanding what and why this is all going wrong.
 -->
 
 ---
@@ -42,9 +42,80 @@ transition: none
 <img src="/tac2.jpg">
 
 <!--
-That would be too easy, wouldn't it. So, I hop on a call with the engineer working on our case,
+That would be too easy, wouldn't it. So, I hop on a call with the engineer working on our case, spend two hours explaining our architecture and use case, reproducing the issue, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added to the case.
+
+Surely we're done here for troubleshooting, and the issue is clear?
 -->
 
 ---
 
 # Vendor TAC fun
+
+```
+Received Downstream RcvPkt (19) len 110:
+  IfIndex (3) len 4: 393
+  Protocol (1) len 1: BFD
+  SrcAddr (5) len 8: 192.0.2.1
+  Data (9) len 24: (hex) {{ data }}
+  PktError (26) len 4: 0
+  RtblIdx (24) len 4: 16
+  MultiHop (64) len 1: (hex) 00
+  Seamless (245) len 1: 0
+  Unknown (213) len 1: (hex) 00
+  Unknown (261) len 4: (hex) 00 00 0e c8
+  Unknown (168) len 1: (hex) 00
+  Authenticated (121) len 1: (hex) 0
+```
+
+TAC: "Our MX side’s BFD is single hop, Fortigate bfd is multi hop."
+
+Me: ...
+
+<!--
+TAC come back with this gem.
+
+"Our MX side's BFD is single hop, Fortigate bfd is multi hop.", and have the MultiHop data as well as the Seamless and Unknown data below it highlighted.
+
+Right, we're clearly on different pages. No multi hop here, and not to mention their notes are also saying that they couldn't get a configuration like that to work in their lab. No issue with bringing _up_ our BFD session, all the problems are with tearing it down.
+
+For the eagle eyed amongst us here, yes the MultiHop bit is set to 0. And yes, the only other option that was highlighted, being 261, the hex data there equals 3784 in decimal, which is the single hop BFD port.
+-->
+
+---
+layout: center
+transition: none
+---
+
+<img src="/tac3.jpg" width="300px">
+
+<!--
+So, we push back. Multihop isn't here at all, the configuration on the FortiGate was also shown to the engineer on the recorded call.
+
+And so what's next? You guessed it, we're told that once again, multihop is the cause here and we need to enable it on our MX to bring up the BFD session.
+
+It's at this point we decided that we're getting no where, and pushed for an escalation to a higher level team.
+-->
+
+---
+
+# Vendor TAC fun
+
+```
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD packet from 192.0.2.1 (IFL 393, rtbl 16, ttl 255) absorbed
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD packet from 192.0.2.1 (IFL 393, rtbl 16, ttl 255) absorbed
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD packet from 192.0.2.1 (IFL 393, rtbl 16, ttl 255) absorbed
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
+```
+
+PR1845344 raised. Making some progress.
+
+<!--
+-->

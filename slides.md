@@ -49,6 +49,10 @@ src: ./pages/kb.md
 ---
 
 ---
+src: ./pages/boot.md
+---
+
+---
 src: ./pages/lessons.md
 ---
 

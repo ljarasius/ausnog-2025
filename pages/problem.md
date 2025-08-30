@@ -1,3 +1,7 @@
+---
+layout: two-cols
+transition: none
+---
 # What is the problem being solved?
 
 5G Networks uses 3 primary sites to deliver internal and customer compute services, one in Sydney (SDC), one in Melbourne (MDC), and one in Adelaide (ADC). These networks are critical for business continuity, however are in need of a refresh after running successfully for many years.
@@ -8,6 +12,10 @@
 - MC-LAGs using virtual chassis
 - Limited visibility
 - Inconsistent design across facilities
+
+::right::
+
+<img src="/problem.jpg" width="400px" class="mt-20 ml-10">
 
 <!--
 One thing we've been wanting to tackle for a while is a refresh of our data centre networks. There is a lot internally that relies on them, and we want to ensure that as we upgrade the rest of our core network, this is not left behind with legacy solutions and hardware. We have 3 sites we use to deliver diversity, which has worked well for us, however there's a few challenges that we have been facing with the existing solution.
