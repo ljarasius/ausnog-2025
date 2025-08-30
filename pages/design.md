@@ -1,6 +1,6 @@
 # Upgrades people, upgrades
 
-<img src="/solution.svg" width=700px>
+<img src="/design.svg" width=700px class="ml-20">
 
 <!--
 What about connecting it all together though? Well, Layer 3 connectivity comes from our existing Provider Edge infrastructure on Juniper MX series routers. The other side of the point-to-point connectivity goes over a pseudowire to our Label Edge Routers, which uses Ciena's 5000 series routing platform.
