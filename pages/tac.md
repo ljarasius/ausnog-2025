@@ -6,7 +6,7 @@ transition: none
 <img src="/tac.jpg">
 
 <!--
-Right, this isn't behaving how it should. Let's speak to the vendor, and get some help on understanding what and why this is all going wrong.
+Here begins my slow descent into madness. Please keep your hands and feet inside the vehicle at all times, it's going to be a bumpy ride.
 -->
 
 ---
@@ -42,7 +42,7 @@ transition: none
 <img src="/tac2.jpg">
 
 <!--
-That would be too easy, wouldn't it. So, I hop on a call with the engineer working on our case, spend two hours explaining our architecture and use case, reproducing the issue, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added to the case.
+That would be too easy, wouldn't it. So, I hop on a call with the engineer working on our case, spend two hours explaining our architecture and use case, reproducing the issue again, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added to the case.
 
 Surely we're done here for troubleshooting, and the issue is clear?
 -->
@@ -118,4 +118,9 @@ PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
 PR1845344 raised. Making some progress.
 
 <!--
+Our escalation is successful. Yay!
+
+After a few questions back and forth to understand the case, the engineer sends us this output that they found. We can see that the BFD daemon stops seeing messages, however doesn't log anything about dropping the session and keeps on transmitting messages. This is exactly the behaviour we have been seeing, as the session stays marked as Up on the MX, and these transmitting messages continue until our usual BGP down message followed by BFD being torn down due to nothing for it to be attached to.
+
+The process of engaging engineering is started, and we are assigned a PR number. Success! We're moving forward.
 -->
