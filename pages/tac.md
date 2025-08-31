@@ -6,7 +6,7 @@ transition: none
 <img src="/tac.jpg">
 
 <!--
-Here begins my slow descent into madness. Please keep your hands and feet inside the vehicle at all times, it's going to be a bumpy ride.
+This is the part where my slow descent into madness begins. Please keep your hands and feet inside the vehicle at all times, it's going to be a bumpy ride.
 -->
 
 ---
@@ -27,7 +27,7 @@ interface: irb.1, peer addr: 192.0.2.1
 That order doesn't seem right to me. Surely a bug, yes?
 
 <!--
-This is the log message that starts it all. We see the BGP session go down due to timeouts exceeding, which is completely fine if we didn't have BFD turned on, however we do. But then we see BFD go down, _after_ it? And what's the message?
+Here is the log message that starts it all. We see the BGP session go down due to timeouts exceeding, which is completely fine if we didn't have BFD turned on, however we do. But then we see BFD go down, _after_ it? And what's the message?
 
 "Received Upstream Destroy Session."
 
@@ -42,7 +42,7 @@ transition: none
 <img src="/tac2.jpg">
 
 <!--
-That would be too easy, wouldn't it. So, I hop on a call with the engineer working on our case, spend two hours explaining our architecture and use case, reproducing the issue again, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added to the case.
+That would be too easy, wouldn't it. So, I hop on a call with the engineer working on our case, spend two hours explaining our architecture and use case, reproducing the issue multiple times, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added to the case.
 
 Surely we're done here for troubleshooting, and the issue is clear?
 -->
@@ -74,11 +74,11 @@ Me: ...
 <!--
 TAC come back with this gem.
 
-"Our MX side's BFD is single hop, Fortigate bfd is multi hop.", and have the MultiHop data as well as the Seamless and Unknown data below it highlighted.
+"Our MX side's BFD is single hop, Fortigate bfd is multi hop." They also have the MultiHop data as well as the Seamless and Unknown data below it highlighted.
 
 Right, we're clearly on different pages. No multi hop here, and not to mention their notes are also saying that they couldn't get a configuration like that to work in their lab. No issue with bringing _up_ our BFD session, all the problems are with tearing it down.
 
-For the eagle eyed amongst us here, yes the MultiHop bit is set to 0. And yes, the only other option that was highlighted, being 261, the hex data there equals 3784 in decimal, which is the single hop BFD port.
+For the eagle eyed amongst us here, yes the MultiHop bit is set to 0. And yes, the only other option that was highlighted with bits that aren't set at 0, being option 261, the hex data there equals 3784 in decimal, which is the single hop BFD port.
 -->
 
 ---
@@ -124,3 +124,86 @@ After a few questions back and forth to understand the case, the engineer sends 
 
 The process of engaging engineering is started, and we are assigned a PR number. Success! We're moving forward.
 -->
+
+---
+layout: center
+transition: none
+---
+
+<img src="/tac4.jpg" width="450px">
+
+<!--
+A few more questions, along with some more in-depth logging and PFE dumps, and we get the news we've been waiting for. The vendor has managed to replicate our issue in their lab.
+
+Right, let's just wait for a few days and see what happens. Hopefully this is related to something that is already fixed, and we can just upgrade to resolve the problem.
+-->
+
+---
+
+# Vendor TAC fun
+
+>As per engineering team,it seems to be a limitation.
+><br><br>
+>l2interface of the IRB - VPLS routing instance is "lsi.1048576" pseudo interface does not have the FPC address associated!
+>
+>A single hop BFD session over IRB interface would not have pfe addr, if the VPLS instance the IRB belongs to has only LSI interfaces bound to VPLS pseudowires and has no local non-tunnel attachment circuits.
+><br><br>
+>We can have dummy interface(pysical interface) added to such vpls routing-instance to make it work!
+
+TL;DR - you need a physical attachment interface for this to work.
+
+<!--
+We've waited patiently, and hopefully we have some good news.
+
+We can get this to work, by adding a dummy physical interface to the VPLS instance. Oh.
+
+So, we push back and ask to see what else we can do here, as that's a little less than ideal. The response we receive says they believe we can just turn off hardware processing for BFD on the whole device, moving it onto the CPU, and that will fix the issue. Alternatively, if we want this to work in hardware, we need to an enhancement request raised up to the PLM for evaluation to add support.
+
+That's a bit disappointing, we have some physical interfaces we are also using BFD on, we're going to need to see what kind of CPU impact we're going to have here before we make any decisions.
+-->
+
+---
+
+# Vendor TAC fun
+
+Day `x`:
+>Engineering team suggested to test below knob which will change all BFD session from distributed mode to centralized mode
+><br><br>
+>`set routing-options ppm no-delegate-processing-irb`
+
+<br>
+
+Day `x+1`:
+>We checked with below knob on lab devices however issue still persisted.
+
+<br><br>
+
+Well that was short lived.
+
+<!--
+So, we get ready to start testing removing the hardware offloading for BFD. But before we can even get a chance, TAC comes back that this fix doesn't actually work. Thankfully they sorted that fast before we spent any more time on this.
+
+It's at this point we are getting into the later part of December, with the case having been open for around 2 months. So, we start to wind down for the year, and pick back up where we left off in January.
+-->
+
+---
+
+# Vendor TAC fun
+
+>We had multiple session with engineering team and extensively worked on LAB device and we found that issue is resolved after "restart PPM" without any configuration addition
+
+Kick the PPM daemon and it's all good? That's a little bit of a backflip from it not being supported at all.
+
+<!--
+Our TAC engineer has been hard at work over the break while we have been off over the holidays. We come back to see that they have a fix for our issue, just restart the PPM daemon. Now, that's a very impactful thing to be doing, however at least we are now feeling a little more sane that we weren't trying to do something so crazy that the box just couldn't handle it.
+
+So, we leave TAC to continue looking at what the cause is and if they can get a software patch in to resolve it.
+-->
+
+---
+
+# Vendor TAC fun
+
+>As per multiple testing we performed, issue is seen when device is upgraded but issue gets cleared when device is once rebooted or PPM restart after the upgrade and not seen again until device is again upgraded to same version.
+
+Wait, it's a single restart of the PPM daemon and it's fixed for good?

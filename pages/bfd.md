@@ -17,6 +17,9 @@ Address                  State     Interface      Time     Interval  Multiplier
  Local discriminator 52, remote discriminator 37
  Echo TX interval 0.000, echo detection interval 0.000
  Echo mode disabled/inactive Session ID: 0x5f4
+
+1 sessions, 1 clients
+Cumulative transmit rate 10.0 pps, cumulative receive rate 10.0 pps
 ```
 
 It's... still up?
@@ -26,7 +29,7 @@ We go looking at the BGP session, and it is still showing Established. Okay, so 
 
 Wait, it hasn't torn down? There's clearly no messages coming in, the VLAN that trunks back to the psuedowire for this circuit doesn't exist on the switches.
 
-We dig through the logs, and decide that this is definitely a bug and to take the next step. Time to engage the vendor.
+So we, start digging through the logs.
 -->
 
 ---
@@ -40,5 +43,12 @@ louisj@pe1.pop1> show bfd session address 192.0.2.1 extensive
 Cumulative transmit rate 0.0 pps, cumulative receive rate 0.0 pps
 ```
 
+Well, that's definitely a lot longer than 300ms.
+
 <!--
+And once again, the firewall just reappears and starts responding again. We check the BFD session again, it's now down. It becomes pretty clear that because the primary circuit still has routes installed despite the other end not being reachable, the traffic is being blackholed until the session gets torn down and the routes removed.
+
+A little bit of playing around with the BGP session, and we can see that cleanly signalling down the session results in a clean failover with no discernable traffic impact. The conclusion here is that any maintenance works or configuration changes that actually tell the other end to take action will work as expected, however if we are relying on BFD at all, then we are up a proverbial creek with no paddle.
+
+It is agreed that this is definitely a bug, and we need to take the next steps. Time to engage the vendor.
 -->
