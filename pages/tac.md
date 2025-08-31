@@ -176,7 +176,7 @@ Day `x`:
 Day `x+1`:
 >We checked with below knob on lab devices however issue still persisted.
 
-<br><br>
+<br>
 
 Well that was short lived.
 
@@ -205,5 +205,55 @@ So, we leave TAC to continue looking at what the cause is and if they can get a 
 # Vendor TAC fun
 
 >As per multiple testing we performed, issue is seen when device is upgraded but issue gets cleared when device is once rebooted or PPM restart after the upgrade and not seen again until device is again upgraded to same version.
+><br><br>
+>Also as requested by engineering team, we tested on latest DCB and issue is not seen.
 
-Wait, it's a single restart of the PPM daemon and it's fixed for good?
+Wait, it's a single restart of the PPM daemon and it's fixed for good? Sounds like the bug has a fix somewhere too in the latest engineering builds.
+
+<!--
+Or maybe we don't need a software patch at all? If the PPM daemon gets restarted once, either manually or as part of a reboot, the issue is fixed. We're only hitting this issue because we are on our first boot after updating to this Junos version.
+
+TAC are advising they are unable to reproduce the issue either on newer internal builds either, so it sounds like we are getting closer to a resolution here.
+-->
+
+---
+layout: center
+transition: none
+---
+
+<img src="/tac5.jpg" width="400px">
+
+<!--
+We're hitting this behaviour on 21.2 code, which we have been working towards upgrading before hitting this issue. So, we upgrade a box to 23.2 train, and sure enough, the issue isn't visible there.
+
+Roll the software back to 21.2 and reboot into it, the issue reappears. Reboot the box, issue is now gone again. I was actually stunned, completely skeptical of the solution provided up until this point.
+
+Surely, engineering know what they've done to fix this though. Right? Right? Right?
+-->
+
+---
+
+# Vendor TAC fun
+
+>As per engineering team, they are not able to find PR or RLI through which fix is added on latest releases.
+
+That's not very reassuring, but at least it is fixed.
+
+<!--
+No, they apparently don't. Looks like there's a few teams involved here, that are all pointing their fingers at each other.
+
+We wait to see if we can get any more information as to what the cause is, however that answer isn't clear.
+-->
+
+---
+layout: center
+transition: none
+---
+
+<img src="/tac6.jpg" width="450px">
+
+<!--
+We'd like to have something to refer to for this bug however, for documenting internally as well as being visible for others potentially hitting the same issue. So, we ask for either our PR to be made public, or for a KB article to be created.
+
+Seeing that we had been told that they have no idea how the issue was fixed, just that it was fixed, I did expect a little bit more push back on this.
+-->
