@@ -157,7 +157,7 @@ We've waited patiently, and hopefully we have some good news.
 
 We can get this to work... by adding a dummy physical interface to the VPLS instance. Oh.
 
-So, we push back and ask to see what else we can do here, as that's a little less than ideal. The response we receive says that they believe we can just turn off hardware processing for BFD on the whole device, moving it onto the CPU, and that will fix the issue. Alternatively, if we want this to work in hardware, we need to an enhancement request raised up to the PLM for evaluation to add support.
+So, we push back and ask to see what else we can do here, as that's a little less than ideal. The response we receive says that they believe we can just turn off hardware processing for BFD on the whole device, moving it onto the CPU, and that will fix the issue. Alternatively, if we want this to work in hardware, we need to have an enhancement request raised up to the PLM for evaluation to add support.
 
 That's a bit disappointing, we have some physical interfaces we are also using BFD on, we're going to need to see what kind of CPU impact we're going to have here before we make any decisions.
 -->
