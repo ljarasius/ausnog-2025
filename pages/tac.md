@@ -42,7 +42,7 @@ transition: none
 <img src="/tac2.jpg" width="750px">
 
 <!--
-That would be too easy, wouldn't it. So, I hop on a call with the engineer assigned to our case, spend over two hours explaining our architecture and use case, reproducing the issue multiple times, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added then added to the case as well, to further assist with diagnosing the cause.
+That would be too easy, wouldn't it. So, I hop on a call with the engineer assigned to our case, spend over two hours explaining our architecture and use case, reproducing the issue multiple times, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks are also added to the case as well, to further assist with diagnosing the cause.
 
 Surely we're done here for troubleshooting, and the issue is clear?
 -->
