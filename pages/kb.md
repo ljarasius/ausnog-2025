@@ -14,7 +14,7 @@ But we got our knowledge base article, immortalised on the internet! Want to fix
 
 This bug only affects the first boot on an affected version, which had never even occurred to us that something like this was possible before going down this rabbit hole. Surely, after upgrading a device and it boots into the OS, it should be the same as every subsequent boot? Apparently that isn't always the case.
 
-The article mentions that only 21.2R3-S2 is known to be affected. Is that the only version impacted? We don't think so, and the final line sums why we believe so.
+The article mentions that only 21.2R3-S2 is known to be affected. Is that the only version impacted? We don't think so, and the final line sums up why we believe so.
 
-"How this issue is fixed in newer release is unidentified."
+"How issue is fixed in newer release is unidentified."
 -->
