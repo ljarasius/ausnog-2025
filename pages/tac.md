@@ -39,10 +39,10 @@ layout: center
 transition: none
 ---
 
-<img src="/tac2.jpg">
+<img src="/tac2.jpg" width="750px">
 
 <!--
-That would be too easy, wouldn't it. So, I hop on a call with the engineer assigned to our case, spend over two hours explaining our architecture and use case, reproducing the issue multiple times, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added then added to the case as well to further assist with diagnosing the cause.
+That would be too easy, wouldn't it. So, I hop on a call with the engineer assigned to our case, spend over two hours explaining our architecture and use case, reproducing the issue multiple times, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added then added to the case as well, to further assist with diagnosing the cause.
 
 Surely we're done here for troubleshooting, and the issue is clear?
 -->
@@ -72,7 +72,7 @@ TAC: "Our MX side’s BFD is single hop, Fortigate bfd is multi hop."
 Me: ...
 
 <!--
-That would be too easy. We wait for a few days, and then TAC come back with this gem.
+One can only dream. We wait for a few days, and then TAC come back with this gem.
 
 "Our MX side's BFD is single hop, Fortigate bfd is multi hop." They also have the MultiHop data as well as the Seamless and Unknown data below it highlighted.
 
@@ -118,7 +118,7 @@ PPM Trace: BFD periodic xmit to 192.0.2.1 (IFL 393, rtbl 16, single-hop port)
 PR1845344 raised. Making some progress.
 
 <!--
-Our escalation is successful. Yay!
+Our escalation is successful. Awesome!
 
 After a few questions back and forth to understand the case, the engineer sends us this output that they found. We can see that the BFD daemon stops seeing messages, however doesn't log anything about dropping the session and keeps on transmitting messages. This is exactly the behaviour we have been seeing, as the session stays marked as Up on the MX, and these transmitting messages continue until our usual BGP down message followed by BFD being torn down due to nothing for it to be attached to.
 
@@ -213,7 +213,7 @@ Wait, it's a single restart of the PPM daemon and it's fixed for good? Sounds li
 <!--
 Or maybe we don't need a software patch at all? It is actually only if the PPM daemon gets restarted just once, either manually or as part of a reboot, the issue is fixed. We're only hitting this issue because we are on our first boot after updating to this Junos version.
 
-TAC are advising they are unable to reproduce the issue either on newer internal builds either, so it sounds like we are getting closer to a resolution here.
+TAC are advising they are unable to reproduce the issue either on newer internal builds, so it sounds like we are getting closer to a resolution here.
 -->
 
 ---

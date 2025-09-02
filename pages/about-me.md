@@ -22,7 +22,7 @@ layout: two-cols
 <!--
 G'day, ladies and gents. I'm Louis, and I've been building and operating networks now for a bit over 6 years.
 
-I've worked on quite a few carrier networks, some larger corporate and government entities as well while in professional services roles. Most recently, I've been at 5G Networks working on their international MPLS network and data centre fabric, as well as some other fun stuff like automation, documentation cleanup and process improvements.
+I've worked on quite a few carrier networks, some larger corporate and government entities as well while in professional services roles. Most recently, I've been at 5G Networks working on our international MPLS network and our data centre fabric, as well as some other fun stuff like automation, documentation cleanup and process improvements.
 
 In my spare time, I enjoy having a laugh with friends - some of which you may know pictured on the right, playing video games, and solving problems with code.
 -->
