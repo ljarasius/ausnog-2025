@@ -15,7 +15,7 @@ This is the part where my slow descent into madness begins. Please keep your han
 
 ```
 rpd[30554]: BGP_IO_ERROR_CLOSE_SESSION: BGP peer 192.0.2.1 (External AS 65032):
-Error event Operation timed out(60) for I/O session - closing it (instance {{ vrf })
+Error event Operation timed out(60) for I/O session - closing it (instance {{ vrf }})
 
 bfdd[29629]: BFDD_STATE_UP_TO_DOWN: BFD Session 192.0.2.1 (IFL 393) state Up -> Down
 LD/RD(46/19) Up time:00:03:12 Local diag: AdminDown Remote diag: None Reason: Received Upstream Destroy Session.
@@ -24,7 +24,7 @@ bfdd[29629]: BFDD_TRAP_SHOP_STATE_DOWN: local discriminator: 46, new state: down
 interface: irb.1, peer addr: 192.0.2.1
 ```
 
-That order doesn't seem right to me. Surely a bug, yes?
+That order doesn't seem right to me. If BGP is taking down my BFD session, there's no real point in having it turned on. Surely a bug, yes?
 
 <!--
 Here is the log message that starts it all. We see the BGP session go down due to timeouts exceeding, which is completely fine if we didn't have BFD turned on, however we do. But then we see BFD go down, _after_ it? And what's the message?
@@ -42,7 +42,7 @@ transition: none
 <img src="/tac2.jpg">
 
 <!--
-That would be too easy, wouldn't it. So, I hop on a call with the engineer working on our case, spend two hours explaining our architecture and use case, reproducing the issue multiple times, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added to the case.
+That would be too easy, wouldn't it. So, I hop on a call with the engineer assigned to our case, spend over two hours explaining our architecture and use case, reproducing the issue multiple times, and answering questions. This is all recorded by the engineer for them to come back to as needed. All the tracebacks, log dumps and terminal scrollbacks added then added to the case as well to further assist with diagnosing the cause.
 
 Surely we're done here for troubleshooting, and the issue is clear?
 -->
@@ -72,7 +72,7 @@ TAC: "Our MX side’s BFD is single hop, Fortigate bfd is multi hop."
 Me: ...
 
 <!--
-TAC come back with this gem.
+That would be too easy. We wait for a few days, and then TAC come back with this gem.
 
 "Our MX side's BFD is single hop, Fortigate bfd is multi hop." They also have the MultiHop data as well as the Seamless and Unknown data below it highlighted.
 
@@ -89,9 +89,9 @@ transition: none
 <img src="/tac3.jpg" width="300px">
 
 <!--
-So, we push back. Multihop isn't here at all, the configuration on the FortiGate was also shown to the engineer on the recorded call.
+So, we push back. Multihop isn't here at all, the configuration on the FortiGate was also shown to the engineer on the recorded call, and there clearly wasn't anything to do with multihop in it. So, what's next?
 
-And so what's next? You guessed it, we're told that once again, multihop is the cause here and we need to enable it on our MX to bring up the BFD session.
+You guessed it, we're told that once again, multihop is the cause here and we need to enable it on our MX to bring up the BFD session.
 
 It's at this point we decided that we're getting no where, and pushed for an escalation to a higher level team.
 -->
@@ -155,9 +155,9 @@ TL;DR - you need a physical attachment interface for this to work.
 <!--
 We've waited patiently, and hopefully we have some good news.
 
-We can get this to work, by adding a dummy physical interface to the VPLS instance. Oh.
+We can get this to work... by adding a dummy physical interface to the VPLS instance. Oh.
 
-So, we push back and ask to see what else we can do here, as that's a little less than ideal. The response we receive says they believe we can just turn off hardware processing for BFD on the whole device, moving it onto the CPU, and that will fix the issue. Alternatively, if we want this to work in hardware, we need to an enhancement request raised up to the PLM for evaluation to add support.
+So, we push back and ask to see what else we can do here, as that's a little less than ideal. The response we receive says that they believe we can just turn off hardware processing for BFD on the whole device, moving it onto the CPU, and that will fix the issue. Alternatively, if we want this to work in hardware, we need to an enhancement request raised up to the PLM for evaluation to add support.
 
 That's a bit disappointing, we have some physical interfaces we are also using BFD on, we're going to need to see what kind of CPU impact we're going to have here before we make any decisions.
 -->
@@ -181,9 +181,9 @@ Day `x+1`:
 Well that was short lived.
 
 <!--
-So, we get ready to start testing removing the hardware offloading for BFD. But before we can even get a chance, TAC comes back that this fix doesn't actually work. Thankfully they sorted that fast before we spent any more time on this.
+So, we get ready to start testing removing the hardware offloading for BFD. But before we can even get a chance, TAC comes back that this fix doesn't actually work. Well, thankfully they sorted that fast before we spent any more time on this.
 
-It's at this point we are getting into the later part of December, with the case having been open for around 2 months. So, we start to wind down for the year, and pick back up where we left off in January.
+It's at this point we are getting into the later part of December, with the case having been open for around 2 months. So, we start to wind down for the annual telco shutdown period, and pick back up where we left off in January.
 -->
 
 ---
@@ -195,9 +195,9 @@ It's at this point we are getting into the later part of December, with the case
 Kick the PPM daemon and it's all good? That's a little bit of a backflip from it not being supported at all.
 
 <!--
-Our TAC engineer has been hard at work over the break while we have been off over the holidays. We come back to see that they have a fix for our issue, just restart the PPM daemon. Now, that's a very impactful thing to be doing, however at least we are now feeling a little more sane that we weren't trying to do something so crazy that the box just couldn't handle it.
+And when we come back, we find that our TAC engineer has been hard at work over the break while we have been off enjoying our holidays. We come back to see that they have a fix for our issue, just restart the PPM daemon. Now, that's a very impactful thing to be doing, however at least we are now feeling a little more sane that we weren't trying to do something so crazy that the box just couldn't handle it.
 
-So, we leave TAC to continue looking at what the cause is and if they can get a software patch in to resolve it.
+So, we leave TAC to continue looking at what the cause is, and if they can get a software patch in to resolve it.
 -->
 
 ---
@@ -211,7 +211,7 @@ So, we leave TAC to continue looking at what the cause is and if they can get a 
 Wait, it's a single restart of the PPM daemon and it's fixed for good? Sounds like the bug has a fix somewhere too in the latest engineering builds.
 
 <!--
-Or maybe we don't need a software patch at all? If the PPM daemon gets restarted once, either manually or as part of a reboot, the issue is fixed. We're only hitting this issue because we are on our first boot after updating to this Junos version.
+Or maybe we don't need a software patch at all? It is actually only if the PPM daemon gets restarted just once, either manually or as part of a reboot, the issue is fixed. We're only hitting this issue because we are on our first boot after updating to this Junos version.
 
 TAC are advising they are unable to reproduce the issue either on newer internal builds either, so it sounds like we are getting closer to a resolution here.
 -->

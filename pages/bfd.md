@@ -25,7 +25,7 @@ Cumulative transmit rate 10.0 pps, cumulative receive rate 10.0 pps
 It's... still up?
 
 <!--
-We go looking at the BGP session, and it is still showing Established. Okay, so what's BFD doing then?
+We login to the Juniper, go looking at the BGP session, and it is... still showing Established? Okay, so what's BFD doing then?
 
 Wait, it hasn't torn down? There's clearly no messages coming in, the VLAN that trunks back to the psuedowire for this circuit doesn't exist on the switches.
 
@@ -46,9 +46,9 @@ Cumulative transmit rate 0.0 pps, cumulative receive rate 0.0 pps
 Well, that's definitely a lot longer than 300ms.
 
 <!--
-And once again, the firewall just reappears and starts responding again. We check the BFD session again, it's now down. It becomes pretty clear that because the primary circuit still has routes installed despite the other end not being reachable, the traffic is being blackholed until the session gets torn down and the routes removed.
+And once again, just as we start to look further, the firewall just reappears and starts responding again. We check the BFD session again, and it's now down. It quickly becomes pretty clear to us that because the primary circuit still has routes installed on the MX, despite the other end not being reachable, the traffic is being blackholed until the session gets torn down and the routes removed.
 
-A little bit of playing around with the BGP session, and we can see that cleanly signalling down the session results in a clean failover with no discernable traffic impact. The conclusion here is that any maintenance works or configuration changes that actually tell the other end to take action will work as expected, however if we are relying on BFD at all, then we are up a proverbial creek with no paddle.
+Now that everything is working again, we fail it all back, and once again there is no drops to connectivity. A little bit of playing around with the BGP session, and we can see that if we cleanly signal down the session, it results in a clean failover with no discernable traffic impact. The conclusion here is that any maintenance works or configuration changes that actually tell the other end to take action will work as expected, however if we are relying on BFD at all, then we are up a proverbial creek with no paddle.
 
 It is agreed that this is definitely a bug, and we need to take the next steps. Time to engage the vendor.
 -->

@@ -20,7 +20,7 @@ layout: two-cols
 <img src="/about-me.jpeg">
 
 <!--
-So, a quick background about me. I'm Louis, and I've been building and operating networks now for a bit over 6 years.
+G'day, ladies and gents. I'm Louis, and I've been building and operating networks now for a bit over 6 years.
 
 I've worked on quite a few carrier networks, some larger corporate and government entities as well while in professional services roles. Most recently, I've been at 5G Networks working on their international MPLS network and data centre fabric, as well as some other fun stuff like automation, documentation cleanup and process improvements.
 
